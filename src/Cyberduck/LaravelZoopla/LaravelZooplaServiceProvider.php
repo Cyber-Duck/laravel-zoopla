@@ -31,8 +31,8 @@ class LaravelZooplaServiceProvider extends ServiceProvider {
 	{
 		$this->app['zoopla'] = $this->app->share(function ($app) {
 
-            $api_key  = 'dke7vkbynsfrptneuzkyyacd';
-            $endpoint = 'http://api.zoopla.co.uk/api/v1/';
+            $api_key  = isset($_ENV['laravel-zoopla.api_key']) ? $_ENV['laravel-zoopla.api_key'] : $this->app['config']->get('laravel-zoopla::api_key');
+            $endpoint = isset($_ENV['laravel-zoopla.endpoint']) ? $_ENV['laravel-zoopla.endpoint'] : $this->app['config']->get('laravel-zoopla::endpoint');
             $client   = new Client();
 
             return new Zoopla($api_key, $endpoint, $client);
