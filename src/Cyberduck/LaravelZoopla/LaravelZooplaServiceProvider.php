@@ -29,7 +29,7 @@ class LaravelZooplaServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['zoopla'] = $this->app->share(function ($app) {
+		$this->app->bindShared('zoopla', function ($app) {
 
             $api_key  = isset($_ENV['laravel-zoopla.api_key']) ? $_ENV['laravel-zoopla.api_key'] : $this->app['config']->get('laravel-zoopla::api_key');
             $endpoint = isset($_ENV['laravel-zoopla.endpoint']) ? $_ENV['laravel-zoopla.endpoint'] : $this->app['config']->get('laravel-zoopla::endpoint');
@@ -37,6 +37,11 @@ class LaravelZooplaServiceProvider extends ServiceProvider {
 
             return new Zoopla($api_key, $endpoint, $client);
 
+        });
+
+        $this->app->bind('Cyberduck\LaravelZoopla\Zoopla', function($app)
+        {
+            return $app['zoopla'];
         });
 	}
 

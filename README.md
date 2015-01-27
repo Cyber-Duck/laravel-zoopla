@@ -44,5 +44,5 @@ You will also need to add the service provider and the facade alias to your `app
 The package provides a camel case interface to all the existing api methods
 
 ```php
-Zoopla::PropertyListings(['postcode' => 'n154sh'])
+Zoopla::PropertyListings(['postcode' => 'WD6 3EP'])
 ```
