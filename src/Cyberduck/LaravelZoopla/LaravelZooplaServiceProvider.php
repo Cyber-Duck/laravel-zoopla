@@ -19,7 +19,9 @@ class LaravelZooplaServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('cyberduck/laravel-zoopla');
+        $this->publishes([
+            __DIR__.'/../../config/config.php' => config_path('zoopla.php'),
+        ]);
 	}
 
 	/**
@@ -31,8 +33,8 @@ class LaravelZooplaServiceProvider extends ServiceProvider {
 	{
 		$this->app->bindShared('zoopla', function ($app) {
 
-            $api_key  = isset($_ENV['laravel-zoopla.api_key']) ? $_ENV['laravel-zoopla.api_key'] : $this->app['config']->get('laravel-zoopla::api_key');
-            $endpoint = isset($_ENV['laravel-zoopla.endpoint']) ? $_ENV['laravel-zoopla.endpoint'] : $this->app['config']->get('laravel-zoopla::endpoint');
+            $api_key  = $this->app['config']->get('zoopla.api_key');
+            $endpoint = $this->app['config']->get('zoopla.endpoint');
             $client   = new Client();
 
             return new Zoopla($api_key, $endpoint, $client);
