@@ -31,7 +31,7 @@ class LaravelZooplaServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->bindShared('zoopla', function ($app) {
+		$this->app->singleton('zoopla', function ($app) {
 
             $api_key  = $this->app['config']->get('zoopla.api_key');
             $endpoint = $this->app['config']->get('zoopla.endpoint');
